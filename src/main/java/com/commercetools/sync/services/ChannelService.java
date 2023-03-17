@@ -1,12 +1,19 @@
 package com.commercetools.sync.services;
 
 import io.sphere.sdk.channels.Channel;
+import io.sphere.sdk.channels.ChannelDraft;
 import io.sphere.sdk.client.SphereClient;
+import io.sphere.sdk.commands.UpdateAction;
+import io.sphere.sdk.products.ProductProjection;
+import io.sphere.sdk.taxcategories.TaxCategory;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface ChannelService {
 
@@ -60,4 +67,16 @@ public interface ChannelService {
    */
   @Nonnull
   CompletionStage<Optional<Channel>> createAndCacheChannel(@Nonnull final String key);
+
+  @Nonnull
+  CompletionStage<Optional<Channel>> fetchChannelByKey(@Nullable String key);
+
+  @Nonnull
+  CompletionStage<Optional<Channel>> createChannel(@Nonnull final ChannelDraft channelDraft);
+
+  @Nonnull
+  CompletionStage<Channel> updateChannel(@Nonnull final Channel channel, @Nonnull final List<UpdateAction<Channel>> updateActions);
+
+  @Nonnull
+  CompletionStage<Set<Channel>> fetchMatchingChannelsByKeys(@Nonnull final Set<String> keys);
 }
